@@ -1,0 +1,86 @@
+.action-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.action-feedback {
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #fff;
+  background: rgba(255,255,255,0.15);
+  border-radius: 12px;
+  padding: 10px;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.action-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.action-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 14px 10px;
+  background: rgba(255,255,255,0.12);
+  border: 2px solid rgba(255,255,255,0.15);
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: white;
+  backdrop-filter: blur(4px);
+}
+
+.action-btn:hover:not(:disabled) {
+  background: rgba(255,255,255,0.22);
+  border-color: var(--btn-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+}
+
+.action-btn:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.action-btn.pressed {
+  border-color: var(--btn-color);
+  box-shadow: 0 0 16px var(--btn-color);
+  animation: btnPop 0.3s ease;
+}
+
+@keyframes btnPop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+.action-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.action-icon {
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+.action-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.95);
+}
+
+.action-desc {
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.6);
+}

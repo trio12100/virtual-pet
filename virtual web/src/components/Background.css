@@ -1,0 +1,20 @@
+.bg-particles {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.bg-particle {
+  position: absolute;
+  user-select: none;
+  animation: bgFloat ease-in-out infinite;
+}
+
+@keyframes bgFloat {
+  0%   { transform: translateY(0px) rotate(0deg); }
+  33%  { transform: translateY(-18px) rotate(10deg); }
+  66%  { transform: translateY(10px) rotate(-8deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
