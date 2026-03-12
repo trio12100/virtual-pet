@@ -1,9 +1,11 @@
+nohup: ignoring input
 
 > app@0.0.0 dev
 > vite --host 0.0.0.0 --port 5173
 
+Port 5173 is in use, trying another one...
 
-  VITE v7.3.1  ready in 104 ms
+  [32m[1mVITE[22m v7.3.1[39m  [2mready in [0m[1m105[22m[2m[0m ms[22m
 
-  ➜  Local:   http://localhost:5173/
-  ➜  Network: http://172.20.0.37:5173/
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://localhost:[1m5174[22m/[39m
+  [32m➜[39m  [1mNetwork[22m: [36mhttp://172.20.0.37:[1m5174[22m/[39m
