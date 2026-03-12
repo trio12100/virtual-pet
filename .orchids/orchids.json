@@ -1,0 +1,7 @@
+{
+  "startupCommands": [
+    "cd '/home/user/app/virtual web' && npm ci; cd '/home/user/app/virtual web' && npm run dev -- --host 0.0.0.0 --port 5173"
+  ],
+  "projectId": "3a8b1e96-22b8-4b63-8883-4ee71b484e90",
+  "templateId": "any"
+}
