@@ -1,16 +1,54 @@
 import { useState, useEffect } from 'react'
 import './Pet.css'
 
-const PET_SPRITES = {
-  idle:     { body: '🐱', acc: '',   bg: '' },
-  happy:    { body: '😸', acc: '💕', bg: '' },
-  eating:   { body: '😋', acc: '🍎', bg: '' },
-  playing:  { body: '😹', acc: '🎮', bg: '' },
-  sleeping: { body: '😴', acc: '💤', bg: '' },
-  sad:      { body: '😿', acc: '💧', bg: '' },
-  crying:   { body: '😭', acc: '💔', bg: '' },
-  ecstatic: { body: '🥳', acc: '✨', bg: '' },
-  bath:     { body: '🛁', acc: '🧼', bg: '' },
+const SPECIES_SPRITES = {
+  cat: {
+    idle:     { body: '🐱', acc: '' },
+    happy:    { body: '😸', acc: '💕' },
+    eating:   { body: '😋', acc: '🍎' },
+    playing:  { body: '😹', acc: '🎮' },
+    sleeping: { body: '😴', acc: '💤' },
+    sad:      { body: '😿', acc: '💧' },
+    crying:   { body: '😭', acc: '💔' },
+    ecstatic: { body: '🥳', acc: '✨' },
+  },
+  dog: {
+    idle:     { body: '🐶', acc: '' },
+    happy:    { body: '🐕', acc: '💕' },
+    eating:   { body: '🐶', acc: '🦴' },
+    playing:  { body: '🐕', acc: '🎾' },
+    sleeping: { body: '🐶', acc: '💤' },
+    sad:      { body: '🐶', acc: '💧' },
+    crying:   { body: '🐶', acc: '💔' },
+    ecstatic: { body: '🐕', acc: '✨' },
+  },
+  bunny: {
+    idle:     { body: '🐰', acc: '' },
+    happy:    { body: '🐰', acc: '💕' },
+    eating:   { body: '🐰', acc: '🥕' },
+    playing:  { body: '🐇', acc: '🎮' },
+    sleeping: { body: '🐰', acc: '💤' },
+    sad:      { body: '🐰', acc: '💧' },
+    crying:   { body: '🐰', acc: '💔' },
+    ecstatic: { body: '🐇', acc: '✨' },
+  },
+  fox: {
+    idle:     { body: '🦊', acc: '' },
+    happy:    { body: '🦊', acc: '💕' },
+    eating:   { body: '🦊', acc: '🍖' },
+    playing:  { body: '🦊', acc: '🎮' },
+    sleeping: { body: '🦊', acc: '💤' },
+    sad:      { body: '🦊', acc: '💧' },
+    crying:   { body: '🦊', acc: '💔' },
+    ecstatic: { body: '🦊', acc: '✨' },
+  },
+}
+
+const SPECIES_THEME = {
+  cat:   { primary: '#ff6eb4', secondary: '#a78bfa' },
+  dog:   { primary: '#f9a84d', secondary: '#fb923c' },
+  bunny: { primary: '#a78bfa', secondary: '#c084fc' },
+  fox:   { primary: '#fb923c', secondary: '#f97316' },
 }
 
 const PARTICLE_SETS = {
@@ -49,7 +87,7 @@ function Particle({ emoji }) {
   return <span className="particle" style={style}>{emoji}</span>
 }
 
-export default function Pet({ state, mood, name, level, onPetClick }) {
+export default function Pet({ state, mood, name, level, species = 'cat', onPetClick }) {
   const [bobUp, setBobUp] = useState(false)
   const [particles, setParticles] = useState([])
   const [shake, setShake] = useState(false)
@@ -62,8 +100,10 @@ export default function Pet({ state, mood, name, level, onPetClick }) {
     : mood === 'crying'   ? 'crying'
     : 'idle'
 
-  const sprite = PET_SPRITES[displayState] || PET_SPRITES.idle
-  const glow = MOOD_GLOW[mood] || '#a8e063'
+  const sprites = SPECIES_SPRITES[species] || SPECIES_SPRITES.cat
+  const sprite = sprites[displayState] || sprites.idle
+  const theme = SPECIES_THEME[species] || SPECIES_THEME.cat
+  const glow = MOOD_GLOW[mood] || theme.primary
   const gradient = MOOD_GRADIENT[mood] || MOOD_GRADIENT.happy
 
   // Bob animation
@@ -97,7 +137,7 @@ export default function Pet({ state, mood, name, level, onPetClick }) {
       {/* Name badge */}
       <div className="pet-name-badge">
         <span className="pet-name-text">{name}</span>
-        <span className="pet-level" style={{ background: gradient }}>Lv.{level}</span>
+        <span className="pet-level" style={{ background: `linear-gradient(135deg, ${theme.primary}, ${theme.secondary})` }}>Lv.{level}</span>
       </div>
 
       {/* Main pet body */}

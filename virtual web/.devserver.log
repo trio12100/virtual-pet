@@ -7,3 +7,13 @@
 
   ➜  Local:   http://localhost:5173/
   ➜  Network: http://172.20.0.37:5173/
+7:06:52 AM [vite] (client) hmr update /src/components/NameSetup.jsx
+7:07:01 AM [vite] (client) hmr update /src/components/NameSetup.css
+7:07:08 AM [vite] (client) hmr update /src/App.jsx
+7:07:15 AM [vite] (client) hmr update /src/App.jsx
+7:07:47 AM [vite] (client) hmr update /src/components/Pet.jsx
+7:09:18 AM [vite] (client) hmr update /src/components/ChatBox.jsx
+7:09:49 AM [vite] (client) hmr update /src/components/MiniGame.jsx
+7:09:56 AM [vite] (client) hmr update /src/components/MiniGame.jsx
+7:10:14 AM [vite] (client) hmr update /src/components/MiniGame.css
+7:11:23 AM [vite] (client) hmr update /src/App.jsx

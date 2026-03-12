@@ -199,11 +199,99 @@ function MemoryGame({ onWin }) {
   )
 }
 
+/* ── Word Scramble Game ── */
+const WORD_LIST = [
+  { word: 'happy',      hint: 'A positive feeling 😊' },
+  { word: 'friend',     hint: 'Someone you like a lot 💕' },
+  { word: 'sunny',      hint: 'Bright weather ☀️' },
+  { word: 'ocean',      hint: 'Big body of water 🌊' },
+  { word: 'flower',     hint: 'Pretty and smells nice 🌸' },
+  { word: 'smile',      hint: 'What your face does when happy 😄' },
+  { word: 'dream',      hint: 'Happens when you sleep 🌙' },
+  { word: 'star',       hint: 'Twinkles in the night sky ⭐' },
+  { word: 'magic',      hint: 'Something mysterious and wonderful ✨' },
+  { word: 'bunny',      hint: 'Fluffy pet with big ears 🐰' },
+  { word: 'cozy',       hint: 'Warm and comfortable feeling 🧸' },
+  { word: 'cloud',      hint: 'Floats in the sky ☁️' },
+  { word: 'brave',      hint: 'Not afraid to face challenges 💪' },
+  { word: 'peace',      hint: 'Calm and quiet feeling 🕊️' },
+  { word: 'glow',       hint: 'Gives off light ✨' },
+]
+
+function scramble(word) {
+  const arr = word.split('')
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]]
+  }
+  return arr.join('') === word ? scramble(word) : arr.join('')
+}
+
+function WordScramble({ onWin }) {
+  const [idx]              = useState(() => Math.floor(Math.random() * WORD_LIST.length))
+  const [scrambled]        = useState(() => scramble(WORD_LIST[idx < WORD_LIST.length ? idx : 0].word))
+  const [guess, setGuess]  = useState('')
+  const [status, setStatus] = useState('playing') // playing | won | hint
+  const [showHint, setShowHint] = useState(false)
+  const [tries, setTries]  = useState(0)
+
+  const entry = WORD_LIST[idx]
+
+  const check = () => {
+    const t = tries + 1
+    setTries(t)
+    if (guess.trim().toLowerCase() === entry.word) {
+      setStatus('won')
+      const xp = showHint ? 8 : t <= 2 ? 20 : t <= 4 ? 14 : 8
+      onWin(xp)
+    } else {
+      setGuess('')
+      setStatus('wrong')
+      setTimeout(() => setStatus('playing'), 800)
+    }
+  }
+
+  return (
+    <div className="game-inner">
+      <div className="game-icon">🔤</div>
+      <h3 className="game-name">Word Scramble</h3>
+      <div className="scramble-word">{scrambled.toUpperCase()}</div>
+      {showHint && <p className="game-hint hint-text">💡 Hint: {entry.hint}</p>}
+      {!showHint && status !== 'won' && (
+        <button className="hint-btn" onClick={() => setShowHint(true)}>Show hint 💡</button>
+      )}
+      {status === 'wrong' && <p className="game-hint bad">❌ Try again!</p>}
+      {status !== 'won' ? (
+        <div className="game-controls">
+          <input
+            className="game-input"
+            type="text"
+            value={guess}
+            onChange={e => setGuess(e.target.value)}
+            onKeyDown={e => e.key === 'Enter' && guess.trim() && check()}
+            placeholder="Unscramble it!"
+            maxLength={12}
+            autoComplete="off"
+          />
+          <button className="game-btn" onClick={check} disabled={!guess.trim()}>Check!</button>
+        </div>
+      ) : (
+        <div>
+          <p className="game-hint">🎉 "{entry.word}" is correct! +XP! 🌟</p>
+          <div className="game-won">You got it in {tries} {tries === 1 ? 'try' : 'tries'}!</div>
+        </div>
+      )}
+      <div className="game-tries">Tries: {tries}</div>
+    </div>
+  )
+}
+
 /* ── Root game selector ── */
 const GAMES = [
   { id: 'number',   label: 'Number Guess', icon: '🎯', desc: 'Guess the secret number!' },
   { id: 'reaction', label: 'Reaction',     icon: '⚡', desc: 'Test your reaction speed!' },
   { id: 'memory',   label: 'Memory Match', icon: '🃏', desc: 'Flip and match pairs!' },
+  { id: 'scramble', label: 'Word Scramble', icon: '🔤', desc: 'Unscramble the hidden word!' },
 ]
 
 export default function MiniGame({ onXPGain }) {
@@ -241,6 +329,7 @@ export default function MiniGame({ onXPGain }) {
           {selected === 'number'   && <NumberGuess  onWin={handleWin} key={selected + Date.now()} />}
           {selected === 'reaction' && <ReactionGame onWin={handleWin} key={selected} />}
           {selected === 'memory'   && <MemoryGame   onWin={handleWin} key={selected + Date.now()} />}
+          {selected === 'scramble' && <WordScramble onWin={handleWin} key={selected + Date.now()} />}
         </div>
       )}
     </div>

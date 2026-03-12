@@ -3,6 +3,7 @@ import { ACHIEVEMENT_LIST } from '../components/Achievements'
 
 const INITIAL_PET = {
   name: '',
+  species: 'cat',
   level: 1,
   xp: 0,
   hunger: 80,
@@ -14,6 +15,8 @@ const INITIAL_PET = {
   daysAlive: 1,
   timesFed: 0,
   timesPlayed: 0,
+  streak: 1,
+  lastVisit: Date.now(),
   achievements: [],
   lastSaved: Date.now(),
   startDate: Date.now(),
@@ -131,9 +134,19 @@ export function usePet() {
     })
   }
 
-  const setName = (name) => {
+  const setName = (name, species = 'cat') => {
+    // Update streak on first login of the day
+    const today = new Date().toDateString()
+    const lastVisitDate = new Date(pet.lastVisit || Date.now()).toDateString()
+    const yesterday = new Date(Date.now() - 86400000).toDateString()
+    const newStreak = lastVisitDate === today
+      ? (pet.streak || 1)
+      : lastVisitDate === yesterday
+        ? (pet.streak || 1) + 1
+        : 1
+
     setPet(prev => {
-      const updated = { ...prev, name }
+      const updated = { ...prev, name, species: species || 'cat', streak: newStreak, lastVisit: Date.now() }
       savePet(updated)
       return updated
     })

@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: virtual-pet
+    runtime: static
+    buildCommand: cd "virtual web" && npm ci && npm run build
+    staticPublishPath: virtual web/dist
+    pullRequestPreviewsEnabled: true
+    headers:
+      - path: /*
+        name: Cache-Control
+        value: no-cache
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html

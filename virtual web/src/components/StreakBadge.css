@@ -1,0 +1,28 @@
+.streak-row {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.time-chip,
+.streak-chip,
+.days-chip {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 20px;
+  padding: 5px 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.8);
+  backdrop-filter: blur(6px);
+}
+
+.streak-chip {
+  background: rgba(255,165,0,0.12);
+  border-color: rgba(255,165,0,0.25);
+  color: #ffd080;
+}
